@@ -1,6 +1,7 @@
 ﻿using OWML.Common;
 using OWML.ModHelper;
 using OWML.Utils;
+using UnityEngine;
 
 namespace SplashScreenSkip
 {
@@ -9,18 +10,17 @@ namespace SplashScreenSkip
         private void Start()
         {
             ModHelper.Console.WriteLine($"Removing xen's precious splash screen!", MessageType.Success);
-            //Skip splash screen (from vesper's half life mod)
-            TitleScreenAnimation titleScreenAnimation = FindObjectOfType<TitleScreenAnimation>();
-            TypeExtensions.SetValue(titleScreenAnimation, "_fadeDuration", 0);
-            TypeExtensions.SetValue(titleScreenAnimation, "_gamepadSplash", false);
-            TypeExtensions.SetValue(titleScreenAnimation, "_introPan", false);
-            TypeExtensions.Invoke(titleScreenAnimation, "FadeInTitleLogo", new object[0]);
-            TitleAnimationController titleAnimationController = FindObjectOfType<TitleAnimationController>();
-            TypeExtensions.SetValue(titleAnimationController, "_logoFadeDelay", 0.001f);
-            TypeExtensions.SetValue(titleAnimationController, "_logoFadeDuration", 0.001f);
-            TypeExtensions.SetValue(titleAnimationController, "_optionsFadeDelay", 0.001f);
-            TypeExtensions.SetValue(titleAnimationController, "_optionsFadeDuration", 0.001f);
-            TypeExtensions.SetValue(titleAnimationController, "_optionsFadeSpacing", 0.001f);
+            TitleScreenAnimation titleScreenAnimation = GameObject.FindObjectOfType<TitleScreenAnimation>();
+            titleScreenAnimation._fadeDuration = 0;
+            titleScreenAnimation._gamepadSplash = false;
+            titleScreenAnimation._introPan = false;
+            TitleAnimationController titleAnimationController = GameObject.FindObjectOfType<TitleAnimationController>();
+            titleAnimationController.FadeInTitleLogo();
+            titleAnimationController._logoFadeDelay = 0.001f;
+            titleAnimationController._logoFadeDuration = 0.001f;
+            titleAnimationController._optionsFadeDelay = 0.001f;
+            titleAnimationController._optionsFadeDuration = 0.001f;
+            titleAnimationController._optionsFadeSpacing = 0.001f;
         }
     }
 }
